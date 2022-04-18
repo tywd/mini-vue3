@@ -1,7 +1,7 @@
 /*
- * @Author: scy
+ * @Author: tywd
  * @Date: 2022-04-18 17:39:06
- * @LastEditors: scy
+ * @LastEditors: tywd
  * @LastEditTime: 2022-04-18 17:45:30
  * @FilePath: /mini-vue3/src/reactivity/tests/index.spec.ts
  * @Description: jest 单测

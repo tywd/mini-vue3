@@ -1,7 +1,7 @@
 /*
- * @Author: scy
+ * @Author: tywd
  * @Date: 2022-04-18 17:37:58
- * @LastEditors: scy
+ * @LastEditors: tywd
  * @LastEditTime: 2022-04-18 17:44:37
  * @FilePath: /mini-vue3/src/reactivity/index.ts
  * @Description: reactivity 出口
