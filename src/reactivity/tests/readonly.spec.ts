@@ -9,6 +9,8 @@ describe('reactive', () => {
         expect(wrapped.foo).toBe(1);
         expect(isReadonly(wrapped)).toBe(true);
         expect(isReadonly(original)).toBe(false);
+        expect(isReadonly(wrapped.bar)).toBe(true); // 检查对象是否是由 readonly 创建的只读代理，这里检查wrapped.foo并没用，会返回false
+        expect(isReadonly(original.bar)).toBe(false);
     });
 
     it('warn then call set ', () => {
