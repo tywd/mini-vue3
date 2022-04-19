@@ -8,7 +8,7 @@
  */
 import { extend } from "../shared";
 let activeEffect, shouldTrack;
-class ReactiveEffect {
+export class ReactiveEffect {
     private _fn: any;
     public scheduler: Function | undefined;
     deps = [];
