@@ -6,4 +6,5 @@
 2.update：change：readonly实现 与 代码重构\
 3.update：add isReactive and isReadonly; optimize: effect's stop method\
 4.update：readonly and reactive 嵌套与shallowReadonly and shallowReactive\
-5.update：update:  isProxy ref isRef unRef proxyRefs的实现
+5.update：isProxy ref isRef unRef proxyRefs的实现
+6.update：computed 实现
