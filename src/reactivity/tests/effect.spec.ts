@@ -69,8 +69,11 @@ describe('effect', () => {
     obj.prop = 2;
     expect(dummy).toBe(2);
     stop(runner); // stop后停止更新，obj.prop怎么改都会保持原值，除非再次执行runner
-    obj.prop = 3;
-    // obj.prop++;
+    // obj.prop = 3; // 上面stop后，因为这一行是只触发set 的trigger函数，此时没有依赖effect，所以effect并不执行，所以dummy不变，但obj.prop数值是有改变的
+    obj.prop++; // 执行obj.prop=3是没问题的，但执行obj.prop++ 有问题是因为它涉及到两步obj.prop=obj.prop+1
+    /* 第一步是 obj.prop(get)收集依赖，由于stop后依赖已被清除，即没有了effect(()=>{})这个方法了，也就是依赖收集没用
+    第二步是 (set)触发依赖，调用了effect.run()也没用，obj.prop无法触发dummy更新，所以+1也没用就都报错了
+    解决：在收集依赖track时做下处理加个参数shouldTrack来处理，让第二步effect.run时执行一次依赖收集 */
     expect(dummy).toBe(2);
 
     // stopped effect should still be manually callable
