@@ -66,14 +66,17 @@ export function track(target, key) {
         dep = new Set();
         depsMap.set(key, dep);// key即为对象target里面被改动的值的key，又将这个key映射到 dep，就能在对应的dep 收集依赖
     }
+    trackEffects(dep)
+}
 
+export function trackEffects(dep) {
     // 若activeEffect已经在dep中可不收集了
     if (dep.has(activeEffect)) return;
     dep.add(activeEffect); // 每次track就会把 new ReactiveEffect() 一整个存入dep，触发依赖时直接遍历dep里的 ReactiveEffect，并调用run方法，就执行了effect方法的fn
     activeEffect.deps.push(dep); // 存储所有的dep到activeEffect方便后续stop
 }
 
-function isTracking() {
+export function isTracking() {
     return shouldTrack && activeEffect !== undefined
     // if (!activeEffect) return;
     // if (!shouldTrack) return;
@@ -82,6 +85,10 @@ function isTracking() {
 export function trigger(target, key) {
     let depsMap = targetMap.get(target);
     let dep = depsMap.get(key)
+    triggerEffects(dep)
+}
+
+export function triggerEffects(dep) {
     for (const effect of dep) {
         if (effect.scheduler) {
             effect.scheduler();

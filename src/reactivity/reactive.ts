@@ -13,7 +13,6 @@ export function shallowReactive(raw) {
     return createActiveObject(raw, shallowReactiveHandles)
 }
 
-
 export function readonly(raw) {
     return createActiveObject(raw, readonlyHandles)
 }
@@ -29,6 +28,10 @@ export function isReactive(value) {
 
 export function isReadonly(value) {
     return !!value[ReactiveFlags.IS_READONLY]
+}
+
+export function isProxy(value){
+    return isReactive(value) || isReadonly(value)
 }
 
 function createActiveObject(raw, baseHandles = mutableHandles) {
