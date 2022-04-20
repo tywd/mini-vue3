@@ -26,7 +26,8 @@ function processElement(vnode, container) {
 function mountElement(vnode, container) {
     const { type, props, children } = vnode
     // type
-    const el = document.createElement(type);
+    // vnode -> element -> div
+    const el = (vnode.el = document.createElement(type));
     // children
     if (typeof children == 'string') {
         el.textContent = children
@@ -52,15 +53,29 @@ function processComponent(vnode, container) {
     mountComponent(vnode, container)
 }
 
-function mountComponent(vnode, container) {
-    const instance = createComponentInstance(vnode)
+function mountComponent(initialVnode, container) {
+    const instance = createComponentInstance(initialVnode)
+    // instance = (const component = { vnode, type: vnode.type, setupState: {} })
     setupComponent(instance)
-    setupRenderEffect(instance, container)
+    setupRenderEffect(instance, initialVnode, container)
 }
 
-function setupRenderEffect(instance, container) {
-    const subTree = instance.render()
+function setupRenderEffect(instance, initialVnode, container) {
+    const { proxy } = instance
+    // const subTree = instance.render
+    const subTree = instance.render.call(proxy)
     // vnode -> patch
     // vnode -> element ->mountElement
     patch(subTree, container)
+
+    // 获取初始化完成(element -> mount挂载之后)之后的el，
+    // 挂载完成后的subTree结构大致如下
+    /* {
+        children:[],
+        props: {},
+        type: '',
+        el: '#root'
+    } */
+    // 把当前subTree根(root)节点的el赋值给(initialVnode)的el
+    initialVnode.el = subTree.el
 }
