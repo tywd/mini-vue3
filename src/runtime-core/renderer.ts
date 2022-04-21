@@ -39,14 +39,22 @@ function mountElement(vnode, container) {
     // if (typeof children == 'string') {
     if (shapeFlag & ShapeFlags.TEXT_CHILDREN) {
         el.textContent = children
-    // } else if (Array.isArray(children)) {
+        // } else if (Array.isArray(children)) {
     } else if (shapeFlag & ShapeFlags.ARRAY_CHILDREN) {
         mountChildren(vnode.children, el)
     }
     // props
     for (const key in props) {
         const val = props[key]
-        el.setAttribute(key, val)
+        const isOn = (key: string) => /^on[A-Z]/.test(key) // 判断是否是onClick等一类on开头的事件
+        if (isOn(key)) {
+            // element事件添加
+            const event = key.slice(2).toLowerCase()
+            el.addEventListener(event, val)
+        } else {
+            // element属性添加
+            el.setAttribute(key, val)
+        }
     }
     container.append(el)
     // document.body.append(el)

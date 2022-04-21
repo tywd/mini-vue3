@@ -12,7 +12,13 @@ export const App = {
         window.self = this;
         return h('div', {
                 id: "root",
-                class: ["root", "head"]
+                class: ["root", "head"],
+                onClick(){
+                    console.log('onClick');
+                },
+                onMousedown(){
+                    console.log('onMousedown');
+                }
             },
             // setupState
             // this.$el -> get root element
