@@ -1,6 +1,9 @@
 import {
     h
 } from "../../lib/guide-mini-vue.esm.js";
+import {
+    Foo
+} from "./Foo.js";
 
 window.self = null
 export const App = {
@@ -8,29 +11,28 @@ export const App = {
     // <template></template>
     // render === <template></template>
     // {type,props,children}
+    name: "App",
     render() {
         window.self = this;
         return h('div', {
                 id: "root",
                 class: ["root", "head"],
-                onClick(){
+                onClick() {
                     console.log('onClick');
                 },
-                onMousedown(){
+                onMousedown() {
                     console.log('onMousedown');
                 }
             },
             // setupState
             // this.$el -> get root element
-            'hi ' + this.msg
-            /* [
-                h("p", {
-                    class: "red"
-                }, "hi"),
-                h("p", {
-                    class: "blue"
-                }, "mini-vue")
-            ] */
+            // 'hi ' + this.msg
+            [
+                h("div", {}, this.msg),
+                h(Foo, {
+                    count: 1
+                })
+            ]
         );
     },
     /* h('div', {
