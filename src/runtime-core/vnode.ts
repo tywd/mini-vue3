@@ -1,5 +1,7 @@
 import { ShapeFlags } from "../shared/ShapeFlags"
 
+export const Fragment = Symbol('Fragment'); // ES6 引入了一种新的原始数据类型 Symbol ，表示独一无二的值，最大的用法是用来定义对象的唯一属性名。
+export const Text = Symbol('Text');
 export function createVNode(type, props?, children?) {
     const vnode = {
         type,
@@ -23,6 +25,10 @@ export function createVNode(type, props?, children?) {
     }
 
     return vnode
+}
+
+export function createTextVNode(text: string) {
+    return createVNode(Text, {}, text)
 }
 
 function getShapeFlag(type) {

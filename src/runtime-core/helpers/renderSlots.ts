@@ -1,4 +1,4 @@
-import { createVNode } from "../vnode";
+import { createVNode, Fragment } from "../vnode";
 
 export function renderSlots(slots, name, props) {
     // console.log('slots: ', slots);
@@ -7,7 +7,8 @@ export function renderSlots(slots, name, props) {
     if (slot) {
         // function
         if (typeof slot === 'function') {
-            return createVNode("div", {}, slot(props))
+            // 我们需要将 div 去掉
+            return createVNode(Fragment, {}, slot(props))
         }
     }
 }

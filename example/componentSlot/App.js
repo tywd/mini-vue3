@@ -1,6 +1,6 @@
 import {
   h,
-  // createTextVNode
+  createTextVNode
 } from "../../lib/guide-mini-vue.esm.js";
 import {
   Foo
@@ -20,7 +20,10 @@ export const App = {
     const app = h("div", {}, "App");
     // object key 具名插槽形式
     const foo = h(Foo, {}, {
-      header: ({age}) => h("p", {}, "header "+ age),
+      // header: ({age}) => h("p", {}, "header "+ age),
+      header: ({
+        age
+      }) => [h("p", {}, "header " + age), createTextVNode('hello-slot中的纯text节点')],
       footer: () => h("p", {}, "footer")
     });
     /* const foo = h(Foo, {}, {
