@@ -26,6 +26,7 @@ function setupStateFulComponent(instance) {
     instance.proxy = new Proxy({ instance }, PublicInstanceProxyHandlers)
     const { setup } = Component;
     if (setup) {
+        setCurrentInstance(instance); // getCurrentInstance() 只能在 setup 或生命周期钩子中调用。
         // function Object
         const setupResult = setup(shallowReadonly(instance.props), {
             /* emit: function (instance, event) {
@@ -33,6 +34,7 @@ function setupStateFulComponent(instance) {
             }.bind(null, instance) */
             emit: instance.emit
         });
+        setCurrentInstance(null);
         handleSetupResult(instance, setupResult)
     }
 }
@@ -51,4 +53,13 @@ function finishComponentSetup(instance) {
     // if(Component.render){
     instance.render = Component.render
     // }
+}
+
+let currentInstance = null;
+export function getCurrentInstance() {
+    return currentInstance;
+}
+
+export function setCurrentInstance(instance) {
+    currentInstance = instance;
 }
