@@ -4,8 +4,17 @@ import { initProps } from "./componentProps";
 import { PublicInstanceProxyHandlers } from "./componentPublicInstance";
 import { initSlots } from "./componentSlot";
 
-export function createComponentInstance(vnode) {
-    const component = { vnode, type: vnode.type, setupState: {}, props: {}, slots: {}, emit: () => { } }
+export function createComponentInstance(vnode, parent) {
+    const component = {
+        vnode,
+        type: vnode.type,
+        setupState: {},
+        props: {},
+        slots: {},
+        emit: () => { },
+        provides: parent ? parent.provides : {}, // 基于原型链，从parent一直往上找provides
+        parent, // 首次挂载根组件的时候是传的null
+    }
     // component.emit = (emit as any).bind(null, component)
     component.emit = emit.bind(null, component) as any
     return component;
