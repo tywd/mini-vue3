@@ -16,7 +16,7 @@ class ReactiveEffect {
 /**
  * @Descripttion: 
  * @param raw {object} reactive 传进的 object
- * !! 关于使用 Reflect.get(target,key) 而不用 target[key] 的原因
+ * ? 关于使用vue3 Proxy 数据劫持为什么用 Reflect.get(target,key) 而不用 target[key] 的原因
    当我们在 Proxy 中使用Reflect，可以添加一个额外参数receiver，可以被传递到Reflect调用中。
     get(target, key, recivier) {
         Reflect.get(target, key, receiver)
